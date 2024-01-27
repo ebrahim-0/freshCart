@@ -15,14 +15,10 @@ export class RegisterComponent {
     phone_number: '',
   };
 
-  submitted: boolean = false;
-
   @ViewChild('registerForm', { static: true }) registerForm!: NgForm;
 
   handleSubmit: any = (e: Event) => {
     e.preventDefault();
-
-    this.submitted = true;
 
     if (this.registerForm.valid) {
       console.log('Form is valid', this.form);
