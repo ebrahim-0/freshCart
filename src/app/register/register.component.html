@@ -1,0 +1,140 @@
+<div class="container w-75 m-4 mx-auto px-3">
+  <h1 class="">Register Now:</h1>
+  <form (submit)="handleSubmit($event)" #registerForm="ngForm">
+    <div class="form-group">
+      <label for="name" class="form-label">Name </label>
+      <input
+        type="text"
+        class="form-control mb-3"
+        name="name"
+        id="name"
+        required
+        minlength="4"
+        aria-describedby="bob"
+        placeholder="Enter your name"
+        [(ngModel)]="form.name"
+        #name="ngModel"
+      />
+
+      <div *ngIf="handleError(name)" class="alert alert-danger">
+        <div *ngIf="name.errors?.['required']">Name is required.</div>
+        <div *ngIf="name.errors?.['minlength']">
+          Name must be at least 4 characters long.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control mb-3"
+        name="email"
+        id="email"
+        aria-describedby="emailHelpId"
+        placeholder="abc@mail.com"
+        [(ngModel)]="form.email"
+        #email="ngModel"
+        pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        required
+      />
+      <div class="alert alert-danger" *ngIf="handleError(email)">
+        <div *ngIf="email.errors?.['required']">Email is required.</div>
+        <div *ngIf="email.errors?.['pattern']">Email is invalid.</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control mb-3"
+        name="password"
+        id="password"
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        aria-describedby="helpId"
+        placeholder="Enter your password"
+        [(ngModel)]="form.password"
+        #password="ngModel"
+        required
+      />
+      <div class="alert alert-danger" *ngIf="handleError(password)">
+        <div *ngIf="password.errors?.['required']">Password is required.</div>
+        <div *ngIf="password.errors?.['minlength']">
+          Password must be at least 8 characters long.
+        </div>
+        <div *ngIf="password.errors?.['pattern']">
+          Password must contain at least one number and one uppercase and
+          lowercase letter
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password_confirmation" class="form-label"
+        >Confirm Password</label
+      >
+      <input
+        type="password"
+        class="form-control mb-3"
+        name="password_confirmation"
+        id="password_confirmation"
+        aria-describedby="helpId"
+        placeholder="Confirm your password"
+        [(ngModel)]="form.password_confirmation"
+        #password_confirmation="ngModel"
+        required
+      />
+
+      <div
+        class="alert alert-danger"
+        *ngIf="
+          handleError(password_confirmation) ||
+          password_confirmation.value !== password.value
+        "
+      >
+        <div *ngIf="password_confirmation.errors?.['required']">
+          Password is required.
+        </div>
+        <div *ngIf="password_confirmation.errors?.['minlength']">
+          Password must be at least 8 characters long.
+        </div>
+        <div
+          *ngIf="
+            password_confirmation.value !== password.value &&
+            !password_confirmation.errors
+          "
+        >
+          Password confirmation must match password.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone_number" class="form-label">Phone Number</label>
+      <input
+        type="text"
+        class="form-control mb-3"
+        name="phone_number"
+        id="phone_number"
+        pattern="^[0-9]{11}$"
+        aria-describedby="helpId"
+        placeholder="Enter your phone number"
+        [(ngModel)]="form.phone_number"
+        #phone_number="ngModel"
+        required
+      />
+
+      <div class="alert alert-danger" *ngIf="handleError(phone_number)">
+        <div *ngIf="phone_number.errors?.['required']">
+          Phone Number is required.
+        </div>
+        <div *ngIf="phone_number.errors?.['pattern']">
+          Phone Number is invalid.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-main float-end">Register</button>
+  </form>
+</div>
