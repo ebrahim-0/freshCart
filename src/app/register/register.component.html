@@ -5,7 +5,7 @@
       <label for="name" class="form-label">Name </label>
       <input
         type="text"
-        class="form-control mb-3"
+        class="form-control mb-2"
         name="name"
         id="name"
         required
@@ -16,7 +16,7 @@
         #name="ngModel"
       />
 
-      <div *ngIf="handleError(name)" class="alert alert-danger">
+      <div *ngIf="handleError(name)" class="text-danger">
         <div *ngIf="name.errors?.['required']">Name is required.</div>
         <div *ngIf="name.errors?.['minlength']">
           Name must be at least 4 characters long.
@@ -28,7 +28,7 @@
       <label for="email" class="form-label">Email</label>
       <input
         type="email"
-        class="form-control mb-3"
+        class="form-control mb-2"
         name="email"
         id="email"
         aria-describedby="emailHelpId"
@@ -38,7 +38,7 @@
         pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
         required
       />
-      <div class="alert alert-danger" *ngIf="handleError(email)">
+      <div class="text-danger" *ngIf="handleError(email)">
         <div *ngIf="email.errors?.['required']">Email is required.</div>
         <div *ngIf="email.errors?.['pattern']">Email is invalid.</div>
       </div>
@@ -48,7 +48,7 @@
       <label for="password" class="form-label">Password</label>
       <input
         type="password"
-        class="form-control mb-3"
+        class="form-control mb-2"
         name="password"
         id="password"
         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
@@ -58,7 +58,7 @@
         #password="ngModel"
         required
       />
-      <div class="alert alert-danger" *ngIf="handleError(password)">
+      <div class="text-danger" *ngIf="handleError(password)">
         <div *ngIf="password.errors?.['required']">Password is required.</div>
         <div *ngIf="password.errors?.['minlength']">
           Password must be at least 8 characters long.
@@ -76,7 +76,7 @@
       >
       <input
         type="password"
-        class="form-control mb-3"
+        class="form-control mb-2"
         name="password_confirmation"
         id="password_confirmation"
         aria-describedby="helpId"
@@ -87,7 +87,7 @@
       />
 
       <div
-        class="alert alert-danger"
+        class="text-danger"
         *ngIf="
           handleError(password_confirmation) ||
           password_confirmation.value !== password.value
@@ -114,7 +114,7 @@
       <label for="phone_number" class="form-label">Phone Number</label>
       <input
         type="text"
-        class="form-control mb-3"
+        class="form-control mb-2"
         name="phone_number"
         id="phone_number"
         pattern="^[0-9]{11}$"
@@ -125,7 +125,7 @@
         required
       />
 
-      <div class="alert alert-danger" *ngIf="handleError(phone_number)">
+      <div class="text-danger" *ngIf="handleError(phone_number)">
         <div *ngIf="phone_number.errors?.['required']">
           Phone Number is required.
         </div>

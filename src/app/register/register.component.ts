@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -17,12 +18,25 @@ export class RegisterComponent {
 
   @ViewChild('registerForm', { static: true }) registerForm!: NgForm;
 
+  constructor(private _AuthServices: AuthService) {}
+
   handleSubmit: any = (e: Event) => {
     e.preventDefault();
 
     if (this.registerForm.valid) {
-      console.log('Form is valid', this.form);
-      // Perform your registration logic here
+      this._AuthServices.register(this.registerForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('completed');
+        },
+      });
+
+      console.log('Form is valid', this.registerForm.value);
     } else {
       console.log('Form is invalid', this.registerForm);
     }
