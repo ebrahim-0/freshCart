@@ -10,13 +10,15 @@ export class AuthService {
 
   register(userData: object): Observable<any> {
     return this._HttpClient.post(
-      'http://localhost:5000/api/auth/signup',
+      'https://auth-64ql.onrender.com/api/auth/signup',
       userData
     );
   }
 
   checkAuth(): Observable<any> {
-    return this._HttpClient.get('http://localhost:5000/api/auth/check-auth');
+    return this._HttpClient.get(
+      'https://auth-64ql.onrender.com/api/auth/check-auth'
+    );
   }
 
   // getCookies(): Observable<any> {
