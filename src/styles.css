@@ -31,9 +31,14 @@ a:hover {
   transition: all 0.3s ease-in-out;
 }
 
+.btn-main-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
 .btn-main:hover {
   background-color: var(--main-color);
-  opacity: 0.7;
+  opacity: 0.5;
   color: white;
 }
 

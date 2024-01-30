@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,44 +9,60 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  form = {
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    phone_number: '',
-  };
+  registerForm: FormGroup = new FormGroup({
+    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [
+      Validators.required,
 
-  @ViewChild('registerForm', { static: true }) registerForm!: NgForm;
+      Validators.pattern('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'),
+    ]),
+    password_confirmation: new FormControl(null, [Validators.required]),
+    phoneNumber: new FormControl(null, [
+      Validators.required,
+      Validators.pattern('^[0-9]{11}$'),
+    ]),
+  });
 
-  constructor(private _AuthServices: AuthService) {}
+  isLoading: boolean = false;
 
-  handleSubmit: any = (e: Event) => {
-    e.preventDefault();
+  errorMessage: string = '';
 
-    if (this.registerForm.valid) {
-      this._AuthServices.register(this.registerForm.value).subscribe({
+  constructor(private _AuthServices: AuthService, private _Router: Router) {}
+
+  handleRegister = (registerForm: FormGroup) => {
+    this.isLoading = true;
+
+    registerForm.markAllAsTouched();
+
+    if (registerForm.valid) {
+      this.errorMessage = '';
+      this._AuthServices.register(registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
+          localStorage.setItem('token', res.token);
+
+          if (res.message === 'User Created Successfully') {
+            this.isLoading = false;
+
+            this._Router.navigate(['/login']);
+          }
         },
         error: (err) => {
           console.log(err);
+          this.isLoading = false;
+          this.errorMessage = err.error.message;
         },
         complete: () => {
           console.log('completed');
         },
       });
 
-      console.log('Form is valid', this.registerForm.value);
+      console.log('Form is valid', registerForm.value);
     } else {
-      console.log('Form is invalid', this.registerForm);
+      this.isLoading = false;
+
+      console.log('Form is invalid', registerForm);
     }
   };
-
-  handleError(control: NgModel) {
-    return (
-      control.invalid &&
-      (control.dirty || control.touched || this.registerForm.submitted)
-    );
-  }
 }

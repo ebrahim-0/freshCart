@@ -1,27 +1,51 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private _HttpClient: HttpClient) {}
+  userData = new BehaviorSubject(null);
+
+  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
+
+  url: string = 'https://login-auth-zj9a.onrender.com';
+  // url: string = 'http://localhost:8000';
 
   register(userData: object): Observable<any> {
-    return this._HttpClient.post(
-      'https://auth-64ql.onrender.com/api/auth/signup',
-      userData
-    );
+    return this._HttpClient.post(`${this.url}/api/signup`, userData);
   }
 
-  checkAuth(): Observable<any> {
-    return this._HttpClient.get(
-      'https://auth-64ql.onrender.com/api/auth/check-auth'
-    );
+  login(userData: object): Observable<any> {
+    return this._HttpClient.post(`${this.url}/api/login`, userData);
   }
 
-  // getCookies(): Observable<any> {
-  //   return document.cookie;
+  logOut() {
+    localStorage.removeItem('token');
+    this.userData.next(null);
+    this._Router.navigate(['/login']);
+  }
+
+  // checkAuth(): Observable<any> {
+  //   const token = localStorage.getItem('token');
+
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  //   return this._HttpClient.get(`${this.url}/api/profile`, {
+  //     headers,
+  //   });
   // }
+
+  decodeUserData() {
+    const token = JSON.stringify(localStorage.getItem('token'));
+
+    const encodedToken: any = jwtDecode(token);
+
+    this.userData.next(encodedToken);
+    console.log(encodedToken);
+    return encodedToken;
+  }
 }
