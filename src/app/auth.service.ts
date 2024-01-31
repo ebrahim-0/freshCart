@@ -10,7 +10,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   userData = new BehaviorSubject(null);
 
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
+  constructor(private _HttpClient: HttpClient, private _Router: Router) {
+    if (localStorage.getItem('token')) {
+      this.decodeUserData();
+    }
+  }
 
   url: string = 'https://login-auth-zj9a.onrender.com';
   // url: string = 'http://localhost:8000';
@@ -42,12 +46,10 @@ export class AuthService {
   decodeUserData() {
     const token = JSON.stringify(localStorage.getItem('token'));
 
-    if (token !== 'null') {
-      const encodedToken: any = jwtDecode(token);
+    const encodedToken: any = jwtDecode(token);
 
-      this.userData.next(encodedToken);
-      console.log(encodedToken);
-      return encodedToken;
-    }
+    this.userData.next(encodedToken);
+    console.log(encodedToken);
+    return encodedToken;
   }
 }

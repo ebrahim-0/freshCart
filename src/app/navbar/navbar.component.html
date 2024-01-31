@@ -20,23 +20,23 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-        <li class="nav-item" *ngIf="isLogin">
+      <ul class="navbar-nav me-auto mt-2 mt-lg-0" *ngIf="isLogin">
+        <li class="nav-item">
           <a class="nav-link active" routerLink="home" aria-current="page"
             >Home <span class="visually-hidden">(current)</span></a
           >
         </li>
-        <li class="nav-item" *ngIf="isLogin">
+        <li class="nav-item">
           <a class="nav-link" routerLink="cart">Cart</a>
         </li>
-        <li class="nav-item" *ngIf="isLogin">
+        <li class="nav-item">
           <a class="nav-link" routerLink="products">Products</a>
         </li>
-        <li class="nav-item" *ngIf="isLogin">
+        <li class="nav-item">
           <a class="nav-link" routerLink="categories">Categories</a>
         </li>
 
-        <li class="nav-item" *ngIf="isLogin">
+        <li class="nav-item">
           <a class="nav-link" routerLink="brands">Brands</a>
         </li>
       </ul>
@@ -56,8 +56,8 @@
         <li class="nav-item" *ngIf="!isLogin">
           <a class="nav-link" routerLink="register">Register</a>
         </li>
-        <li class="nav-item cursor-pointer" (click)="logOut()" *ngIf="isLogin">
-          <span class="nav-link">Logout</span>
+        <li class="nav-item cursor-pointer" *ngIf="isLogin">
+          <span (click)="logOut()" class="nav-link">Logout</span>
         </li>
       </ul>
     </div>
