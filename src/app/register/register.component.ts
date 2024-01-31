@@ -9,6 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
+  isLoading: boolean = false;
+
+  errorMessage: string = '';
+
+  constructor(private _AuthServices: AuthService, private _Router: Router) {}
+
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
     email: new FormControl(null, [Validators.required, Validators.email]),
@@ -23,12 +29,6 @@ export class RegisterComponent {
       Validators.pattern('^[0-9]{11}$'),
     ]),
   });
-
-  isLoading: boolean = false;
-
-  errorMessage: string = '';
-
-  constructor(private _AuthServices: AuthService, private _Router: Router) {}
 
   handleRegister = (registerForm: FormGroup) => {
     this.isLoading = true;

@@ -22,7 +22,7 @@ export class LoginComponent {
 
   errorMessage: string = '';
 
-  constructor(private _AuthServices: AuthService, private _Router: Router) {}
+  constructor(private _AuthService: AuthService, private _Router: Router) {}
 
   handleLogin = (loginForm: FormGroup) => {
     this.isLoading = true;
@@ -31,12 +31,12 @@ export class LoginComponent {
 
     if (loginForm.valid) {
       this.errorMessage = '';
-      this._AuthServices.login(loginForm.value).subscribe({
+      this._AuthService.login(loginForm.value).subscribe({
         next: (res) => {
           console.log(res);
           localStorage.setItem('token', res.token);
 
-          this._AuthServices.decodeUserData();
+          this._AuthService.decodeUserData();
 
           if (res.message === 'User Login Successfully') {
             this.isLoading = false;

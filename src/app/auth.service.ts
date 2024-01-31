@@ -42,10 +42,12 @@ export class AuthService {
   decodeUserData() {
     const token = JSON.stringify(localStorage.getItem('token'));
 
-    const encodedToken: any = jwtDecode(token);
+    if (token !== 'null') {
+      const encodedToken: any = jwtDecode(token);
 
-    this.userData.next(encodedToken);
-    console.log(encodedToken);
-    return encodedToken;
+      this.userData.next(encodedToken);
+      console.log(encodedToken);
+      return encodedToken;
+    }
   }
 }
