@@ -33,16 +33,6 @@ export class AuthService {
     this._Router.navigate(['/login']);
   }
 
-  // checkAuth(): Observable<any> {
-  //   const token = localStorage.getItem('token');
-
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-  //   return this._HttpClient.get(`${this.url}/api/profile`, {
-  //     headers,
-  //   });
-  // }
-
   decodeUserData() {
     const token = JSON.stringify(localStorage.getItem('token'));
 
@@ -52,4 +42,14 @@ export class AuthService {
     console.log(encodedToken);
     return encodedToken;
   }
+
+  // checkAuth(): Observable<any> {
+  //   const token = localStorage.getItem('token');
+
+  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+  //   return this._HttpClient.get(`${this.url}/api/profile`, {
+  //     headers,
+  //   });
+  // }
 }

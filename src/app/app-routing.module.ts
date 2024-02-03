@@ -10,10 +10,16 @@ import { RegisterComponent } from './register/register.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { AuthGuard } from './auth.guard';
 import { AuthTokenGuard } from './auth-token.guard';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
+  {
+    path: 'products-details/:asin',
+    canActivate: [AuthGuard],
+    component: ProductDetailsComponent,
+  },
   { path: 'about', canActivate: [AuthGuard], component: AboutComponent },
   {
     path: 'categories',

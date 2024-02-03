@@ -13,8 +13,9 @@ import { RegisterComponent } from './register/register.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     NotfoundComponent,
     FooterComponent,
     NavbarComponent,
+    ProductDetailsComponent,
   ],
   imports: [
     BrowserModule,
