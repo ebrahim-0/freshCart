@@ -13,9 +13,16 @@ import { RegisterComponent } from './register/register.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { MainSliderComponent } from './mainSlider/mainSlider.component';
+import { BuyPipe } from './buy.pipe';
+import { SeeMorePipe } from './see-more.pipe';
+import { SearchPipe } from './search.pipe';
+import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +38,20 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     FooterComponent,
     NavbarComponent,
     ProductDetailsComponent,
+    MainSliderComponent,
+    BuyPipe,
+    SeeMorePipe,
+    SearchPipe,
+    FeaturedProductsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    CarouselModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

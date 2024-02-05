@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GetProductsService {
+export class ProductsService {
   setProducts = [
     {
       asin: 'B0B2D77YB8',
@@ -200,6 +200,7 @@ export class GetProductsService {
   setProductDetails(product: any): Observable<any> {
     return this._HttpClient.post(`${this.url}/api/productDetails`, product);
   }
+
   getProductDetails(asin: string): Observable<any> {
     return this._HttpClient.get(
       `${this.url}/api/getProductDetails?asin=${asin}`

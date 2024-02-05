@@ -1,0 +1,22 @@
+.desc {
+  cursor: pointer;
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  width: 100px;
+  height: 20px;
+  text-align: center;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 5px;
+  padding: 0 5px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.desc:hover .tooltip {
+  opacity: 1;
+}

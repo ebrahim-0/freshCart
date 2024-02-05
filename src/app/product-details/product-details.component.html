@@ -1,18 +1,39 @@
-<div class="container">
-  <div *ngIf="product" class="card" style="width: 300px">
-    <img [src]="product.image[0]" class="card-img-top" [alt]="product.title" />
-    <div class="card-body d-flex flex-column">
-      <!-- Added flex-column class here -->
-      <h5 class="card-title">{{ product.title }}</h5>
-      <h5 class="card-title">{{ product.asin }}</h5>
-      <p class="card-text">{{ product.price }}</p>
-      <div class="mt-auto">
-        <!-- Added mt-auto to push the card body to the bottom -->
-        <p>{{ product.stars }}</p>
+<div *ngIf="product" class="overflow-hidden row align-items-center mt-5 py-5">
+  <div class="col-md-4">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let slide of product.image">
+        <ng-template carouselSlide>
+          <img [src]="slide" [alt]="slide" [title]="slide" />
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+
+  <div class="d-flex flex-column gap-2 col-md-8">
+    <h4 class="fw-semibold">{{ product.title }}</h4>
+    <div
+      class="p-2 opacity-75 desc"
+      (mousemove)="moveTooltip($event)"
+      (click)="toggleWordLimit()"
+    >
+      {{ product.product_description | seeMore : limitWord }}
+      {{ limitWord === product.product_description.length ? "" : "..." }}
+      <div #tooltipElement class="tooltip">
+        {{
+          limitWord === product.product_description.length
+            ? "See Less"
+            : "See More"
+        }}
       </div>
     </div>
-    <button [routerLink]="['/products-details', product.asin]">
-      Product Details
-    </button>
+
+    <div class="d-flex justify-content-between">
+      <span>{{ product.price }}</span>
+      <div *ngIf="product.stars">
+        <i class="fa-solid fa-star rating-color"></i>
+        <span>{{ product.stars }}</span>
+      </div>
+    </div>
+    <button class="btn btn-main">+Add</button>
   </div>
 </div>

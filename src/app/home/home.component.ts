@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GetProductsService } from '../get-products.service';
+import { ProductsService } from '../products.service';
+import { Product } from '../product';
 
 @Component({
   selector: 'app-home',
@@ -7,24 +8,26 @@ import { GetProductsService } from '../get-products.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  products: any;
+  products: Product[] = [];
 
-  constructor(private _GetProductsService: GetProductsService) {}
+  searchTerm!: string;
+
+  constructor(private _ProductsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.products = this._GetProductsService.setProducts;
+    // this.products = this._ProductsService.setProducts;
 
-    // this._GetProductsService.getProducts().subscribe({
-    //   next: (res) => {
-    //     console.log(res);
-    //     this.products = res;
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    //   complete: () => {
-    //     console.log('completed');
-    //   },
-    // });
+    this._ProductsService.getProducts().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.products = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('completed');
+      },
+    });
   }
 }

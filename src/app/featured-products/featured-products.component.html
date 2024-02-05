@@ -1,0 +1,21 @@
+<div class="product px-2 pt-5 d-flex flex-column h-100">
+  <img [src]="product.image" class="img-fluid mb-3" [alt]="product.title" />
+  <div class="mt-auto mx-auto">
+    <h5>
+      {{ product.title.split(" ").slice(0, 4).join(" ") | buy }}
+    </h5>
+    <div class="d-flex justify-content-between opacity-75">
+      <p>{{ product.price }}</p>
+      <div *ngIf="product.stars">
+        <i class="fa-solid fa-star rating-color"></i>
+        <span>{{ product.stars }}</span>
+      </div>
+    </div>
+  </div>
+  <button
+    [routerLink]="['/products-details', product.asin]"
+    class="btn btn-main my-2 details-button"
+  >
+    Product Details
+  </button>
+</div>
