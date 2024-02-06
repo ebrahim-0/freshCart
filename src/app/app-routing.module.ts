@@ -34,6 +34,11 @@ const routes: Routes = [
     canActivate: [AuthTokenGuard],
     component: RegisterComponent,
   },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
   { path: '**', component: NotfoundComponent },
 ];
 

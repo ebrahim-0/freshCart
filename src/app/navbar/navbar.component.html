@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light sticky-top top-0 z-3">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top top-0 z-3">
   <div class="container">
     <a class="navbar-brand" routerLink="">
       <img
@@ -9,7 +9,7 @@
       />
     </a>
     <button
-      class="navbar-toggler d-lg-none"
+      class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#collapsibleNavId"
@@ -20,7 +20,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0" *ngIf="isLogin">
+      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
         <li class="nav-item">
           <a class="nav-link active" routerLink="home" aria-current="page"
             >Home <span class="visually-hidden">(current)</span></a
@@ -41,13 +41,13 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-        <li class="nav-item d-flex align-items-center">
-          <i class="mx-2 fab fa-instagram"></i>
-          <i class="mx-2 fab fab fa-facebook"></i>
-          <i class="mx-2 fab fa-tiktok"></i>
-          <i class="mx-2 fab fa-twitter"></i>
-          <i class="mx-2 fab fa-linkedin"></i>
-          <i class="mx-2 fab fa-youtube"></i>
+        <li class="nav-item d-flex gap-3 align-items-center">
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-facebook"></i>
+          <i class="fab fa-tiktok"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-linkedin"></i>
+          <i class="fab fa-youtube"></i>
         </li>
 
         <li class="nav-item" *ngIf="!isLogin">
@@ -58,6 +58,9 @@
         </li>
         <li class="nav-item cursor-pointer" *ngIf="isLogin">
           <span (click)="logOut()" class="nav-link">Logout</span>
+        </li>
+        <li class="nav-item cursor-pointer" *ngIf="isLogin">
+          <a routerLink="settings/change-password" class="nav-link">Settings</a>
         </li>
       </ul>
     </div>
