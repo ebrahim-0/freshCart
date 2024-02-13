@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
-import { ProductsService } from '../products.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { AuthService } from '../auth.service';
 
@@ -10,264 +9,153 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
-  cart!: any;
-  products: any[] = [];
-
-  getCart: string = '';
+  cart!: ICart;
+  change: boolean = false;
+  loadingMsg: string = '';
 
   constructor(
-    private _CartService: CartService,
-    private _ProductsService: ProductsService,
-    private _AuthService: AuthService,
+    private cartService: CartService,
+    private authService: AuthService,
     private toast: HotToastService
   ) {}
 
   ngOnInit(): void {
-    this.getCart = 'Getting cart...';
+    this.getCart();
+  }
 
-    this._CartService.getCart().subscribe({
+  getCart() {
+    this.loadingMsg = 'Cart is Loading...';
+    this.cartService.getCart().subscribe({
       next: (res) => {
         this.cart = res;
-
-        console.log('cart', this.cart);
-
-        if (res.message !== 'Cart is empty') {
-          res.items.forEach((item: any) => {
-            this._ProductsService.getProduct(item.asin).subscribe({
-              next: (res) => {
-                this.products.push({ ...res, quantity: item.quantity });
-              },
-              error: (err) => {
-                console.log(err);
-              },
-              complete: () => {
-                console.log('completed');
-                console.log('products', this.products);
-              },
-            });
-          });
-        } else {
-          this.getCart = res.message;
-        }
+        console.log(res);
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         if (err.error.message === 'Token expired') {
-          this.toast.error('Token expired Please login again', {
-            duration: 2000,
-            position: 'top-right',
-          });
-
-          setTimeout(() => {
-            this._AuthService.logOut();
-          }, 2500);
+          this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, {
-            duration: 2000,
-            position: 'top-right',
-          });
+          this.toast.error(err.error.message, { duration: 2000 });
         }
       },
       complete: () => {
-        console.log('completed');
+        this.loadingMsg = '';
       },
     });
   }
 
-  getTotal(): number {
-    return this.products.reduce(
-      (total, product) =>
-        total + parseFloat(product.price.substring(1)) * product.quantity,
-      0
-    );
-  }
-
   incrementQuantity(asin: string) {
-    this.products.forEach((product) => {
-      if (product.asin === asin) {
-        product.quantity++;
-        this._CartService.addToCart(asin).subscribe({
-          next: (res) => {
-            console.log(res);
-            this.toast.success(res.message, {
-              duration: 2000,
-              position: 'top-right',
-            });
-          },
-          error: (err) => {
-            console.log(err);
+    this.change = true;
 
-            if (err.error.message === 'Token expired') {
-              this.toast.error('Token expired Please login again', {
-                duration: 2000,
-                position: 'top-right',
-              });
+    this.cartService.addToCart(asin).subscribe({
+      next: (res) => {
+        this.getCart();
+        this.toast.success(res.message, { duration: 2000 });
+        this.change = false;
+      },
+      error: (err) => {
+        console.error(err);
+        if (err.error.message === 'Token expired') {
+          this.handleTokenExpired();
+        } else {
+          this.toast.error(err.error.message, { duration: 2000 });
+        }
 
-              setTimeout(() => {
-                this._AuthService.logOut();
-              }, 2500);
-            } else {
-              this.toast.error(err.error.message, {
-                duration: 2000,
-                position: 'top-right',
-              });
-            }
-          },
-          complete: () => {
-            console.log('completed');
-          },
-        });
-      }
+        this.change = false;
+      },
     });
   }
 
   decrementQuantity(asin: string) {
-    const newAsin = asin;
-
-    this.products.forEach((product) => {
-      if (product.asin === asin) {
-        if (product.quantity > 1) {
-          product.quantity--;
-          this._CartService.decrementQuantity(newAsin).subscribe({
-            next: (res) => {
-              console.log(res);
-              this.toast.success(res.message, {
-                duration: 2000,
-                position: 'top-right',
-              });
-            },
-            error: (err) => {
-              console.log(err);
-
-              if (err.error.message === 'Token expired') {
-                this.toast.error('Token expired Please login again', {
-                  duration: 2000,
-                  position: 'top-right',
-                });
-
-                setTimeout(() => {
-                  this._AuthService.logOut();
-                }, 2500);
-              } else {
-                this.toast.error(err.error.message, {
-                  duration: 2000,
-                  position: 'top-right',
-                });
-              }
-            },
-            complete: () => {
-              console.log('completed');
-            },
-          });
+    this.change = true;
+    this.cartService.decrementQuantity(asin).subscribe({
+      next: (res) => {
+        this.getCart();
+        this.toast.success(res.message, { duration: 2000 });
+        this.change = false;
+      },
+      error: (err) => {
+        console.error(err);
+        if (err.error.message === 'Token expired') {
+          this.handleTokenExpired();
         } else {
-          this.products = this.products.filter(
-            (product) => product.asin !== asin
-          );
-
-          this._CartService.removeProduct(newAsin).subscribe({
-            next: (res) => {
-              console.log(res);
-              this.toast.success(res.message, {
-                duration: 2000,
-                position: 'top-right',
-              });
-            },
-            error: (err) => {
-              console.log(err);
-
-              if (err.error.message === 'Token expired') {
-                this.toast.error('Token expired Please login again', {
-                  duration: 2000,
-                  position: 'top-right',
-                });
-
-                setTimeout(() => {
-                  this._AuthService.logOut();
-                }, 2500);
-              } else {
-                this.toast.error(err.error.message, {
-                  duration: 2000,
-                  position: 'top-right',
-                });
-              }
-            },
-            complete: () => {
-              console.log('completed');
-            },
-          });
+          this.toast.error(err.error.message, { duration: 2000 });
         }
-      }
+
+        this.change = false;
+      },
     });
   }
 
   removeProduct(asin: string) {
-    const newAsin = asin;
-    this.products = this.products.filter((product) => product.asin !== asin);
-
-    this._CartService.removeProduct(newAsin).subscribe({
+    this.change = true;
+    this.cartService.removeProduct(asin).subscribe({
       next: (res) => {
-        console.log(res);
-        this.toast.success(res.message, {
-          duration: 2000,
-          position: 'top-right',
-        });
+        this.getCart();
+        this.toast.success(res.message, { duration: 2000 });
+        this.change = false;
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
         if (err.error.message === 'Token expired') {
-          this.toast.error('Token expired Please login again', {
-            duration: 2000,
-            position: 'top-right',
-          });
-
-          setTimeout(() => {
-            this._AuthService.logOut();
-          }, 2500);
+          this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, {
-            duration: 2000,
-            position: 'top-right',
-          });
+          this.toast.error(err.error.message, { duration: 2000 });
+          this.change = false;
         }
-      },
-      complete: () => {
-        console.log('completed');
       },
     });
   }
 
   clearCart() {
-    this.products = [];
-    this._CartService.clearCart().subscribe({
+    this.change = true;
+    this.cartService.clearCart().subscribe({
       next: (res) => {
-        console.log(res);
-        this.toast.success('Cart is cleared', {
-          duration: 2000,
-          position: 'top-right',
-        });
+        this.getCart();
+        this.toast.success(res.message, { duration: 2000 });
+        this.change = false;
       },
       error: (err) => {
-        console.log(err);
-
+        console.error(err);
         if (err.error.message === 'Token expired') {
-          this.toast.error('Token expired Please login again', {
-            duration: 2000,
-            position: 'top-right',
-          });
-
-          setTimeout(() => {
-            this._AuthService.logOut();
-          }, 2500);
+          this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, {
-            duration: 2000,
-            position: 'top-right',
-          });
+          this.toast.error(err.error.message, { duration: 2000 });
+          this.change = false;
         }
-      },
-      complete: () => {
-        console.log('completed');
       },
     });
   }
+
+  handleTokenExpired() {
+    this.toast.error('Token expired. Please login again', { duration: 2000 });
+    setTimeout(() => {
+      this.authService.logOut();
+    }, 2500);
+  }
+}
+
+interface ICart {
+  createdAt: string;
+  items: Array<IItem>;
+  totalPrice: number;
+  updatedAt: string;
+  userId: string;
+  _id: string;
+}
+
+interface IItem {
+  asin: string;
+  quantity: number;
+  product: IProduct;
+}
+
+interface IProduct {
+  asin: string;
+  title: string;
+  url: string;
+  image: string;
+  price: string;
+  rating_count: number;
+  stars: number;
 }

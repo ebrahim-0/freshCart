@@ -33,7 +33,6 @@ export class LoginComponent {
       this.errorMessage = '';
       this._AuthService.login(loginForm.value).subscribe({
         next: (res) => {
-          console.log(res);
           localStorage.setItem('token', res.token);
 
           this._AuthService.decodeUserData();
