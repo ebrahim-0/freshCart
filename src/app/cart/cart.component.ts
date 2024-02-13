@@ -29,6 +29,15 @@ export class CartComponent implements OnInit {
       next: (res) => {
         this.cart = res;
         console.log(res);
+
+        this.loadingMsg = '';
+
+        if (res.message === 'Cart is empty') {
+          this.toast.error(res.message, { duration: 2000 });
+          this.loadingMsg = 'Cart is empty';
+        }
+
+        console.log(this.loadingMsg);
       },
       error: (err) => {
         console.error(err);
@@ -38,9 +47,7 @@ export class CartComponent implements OnInit {
           this.toast.error(err.error.message, { duration: 2000 });
         }
       },
-      complete: () => {
-        this.loadingMsg = '';
-      },
+      complete: () => {},
     });
   }
 
@@ -91,9 +98,9 @@ export class CartComponent implements OnInit {
     this.change = true;
     this.cartService.removeProduct(asin).subscribe({
       next: (res) => {
-        this.getCart();
-        this.toast.success(res.message, { duration: 2000 });
         this.change = false;
+        this.toast.success(res.message, { duration: 2000 });
+        this.getCart();
       },
       error: (err) => {
         console.error(err);
@@ -112,7 +119,7 @@ export class CartComponent implements OnInit {
     this.cartService.clearCart().subscribe({
       next: (res) => {
         this.getCart();
-        this.toast.success(res.message, { duration: 2000 });
+        this.toast.success('Cart is cleared', { duration: 2000 });
         this.change = false;
       },
       error: (err) => {

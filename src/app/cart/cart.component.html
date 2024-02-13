@@ -1,4 +1,7 @@
-<div class="bg-main-light p-4 row m-3" *ngIf="cart; else loading">
+<div
+  class="bg-main-light p-4 row m-3"
+  *ngIf="cart?.items?.length; else loading"
+>
   <h2>Shop Cart</h2>
   <p class="text-main">Total: {{ cart.totalPrice | currency }}</p>
 
