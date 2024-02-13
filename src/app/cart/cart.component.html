@@ -1,1 +1,66 @@
-<p>cart works!</p>
+<div class="bg-main-light p-4 row m-3" *ngIf="products.length; else loading">
+  <h2>Shop Cart</h2>
+  <p class="text-main">Total: {{ getTotal() | currency }}</p>
+
+  <div class="card cart">
+    <div class="card-header">
+      <h3>Your Shopping Cart</h3>
+    </div>
+    <div class="card-body">
+      <div class="cart-item" *ngFor="let product of products">
+        <div class="row">
+          <div class="col-xl-3">
+            <img [src]="product.image" alt="Product Image" class="img-fluid" />
+          </div>
+          <div
+            class="col-xl-9 d-flex flex-column flex-xl-row justify-content-between align-items-center"
+          >
+            <div>
+              <h5 class="w-75">{{ product.title }}</h5>
+              <p class="text-main">Price: {{ product.price }}</p>
+              <p>
+                Total:
+                {{ product.price.substring(1) * product.quantity | currency }}
+              </p>
+            </div>
+            <div>
+              <div class="btn-group mx-auto my-2 me-2">
+                <button
+                  class="btn border-main btn-sm"
+                  (click)="incrementQuantity(product.asin)"
+                >
+                  +
+                </button>
+                <span
+                  class="mx-2 d-flex justify-content-center align-items-center"
+                  >{{ product.quantity }}</span
+                >
+
+                <button
+                  class="btn border-main btn-sm"
+                  (click)="decrementQuantity(product.asin)"
+                >
+                  -
+                </button>
+              </div>
+              <button
+                class="btn btn-danger"
+                (click)="removeProduct(product.asin)"
+              >
+                <i class="fa-regular fa-trash-can"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-danger" (click)="clearCart()">Clear Cart</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="alert alert-info">{{ getCart }}</div>
+</ng-template>

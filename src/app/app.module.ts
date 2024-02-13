@@ -23,6 +23,7 @@ import { BuyPipe } from './buy.pipe';
 import { SeeMorePipe } from './see-more.pipe';
 import { SearchPipe } from './search.pipe';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { FeaturedProductsComponent } from './featured-products/featured-products
     BrowserAnimationsModule,
     CarouselModule,
     FormsModule,
+    HotToastModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

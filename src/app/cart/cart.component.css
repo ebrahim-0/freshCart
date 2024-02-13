@@ -1,0 +1,16 @@
+.cart {
+  margin-top: 50px;
+}
+.cart-header {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.cart-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  margin: 5px 0;
+}
+.cart-total {
+  font-weight: bold;
+}

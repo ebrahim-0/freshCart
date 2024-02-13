@@ -69,6 +69,14 @@ a:hover {
   opacity: 1;
 }
 
+.border-main {
+  border: 1px solid var(--main-color);
+}
+
+.border-main:hover {
+  border: 1px solid var(--main-color);
+}
+
 .font-sm {
   font-size: 14px;
 }

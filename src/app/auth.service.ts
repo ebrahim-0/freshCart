@@ -16,15 +16,15 @@ export class AuthService {
     }
   }
 
-  url: string = 'https://login-auth-zj9a.onrender.com';
-  // url: string = 'http://localhost:8000';
+  url: string = 'https://e-commerce-2dfi.onrender.com/api';
+  // url: string = 'http://localhost:8000/api';
 
   register(userData: object): Observable<any> {
-    return this._HttpClient.post(`${this.url}/api/signup`, userData);
+    return this._HttpClient.post(`${this.url}/signup`, userData);
   }
 
   login(userData: object): Observable<any> {
-    return this._HttpClient.post(`${this.url}/api/login`, userData);
+    return this._HttpClient.post(`${this.url}/login`, userData);
   }
 
   logOut() {
@@ -42,14 +42,4 @@ export class AuthService {
     console.log(encodedToken);
     return encodedToken;
   }
-
-  // checkAuth(): Observable<any> {
-  //   const token = localStorage.getItem('token');
-
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-  //   return this._HttpClient.get(`${this.url}/api/profile`, {
-  //     headers,
-  //   });
-  // }
 }
