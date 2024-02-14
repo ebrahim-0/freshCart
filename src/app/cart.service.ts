@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HotToastService } from '@ngneat/hot-toast';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,11 @@ export class CartService {
 
   numberOfItems = new BehaviorSubject(0);
 
-  constructor(private _HttpClient: HttpClient) {
+  constructor(
+    private _HttpClient: HttpClient,
+    private _AuthService: AuthService,
+    private toast: HotToastService
+  ) {
     this.getNumberOfItems();
   }
 
@@ -23,7 +29,21 @@ export class CartService {
         this.numberOfItems.next(res.numberOfCartItem);
       },
       error: (err) => {
-        console.error(err);
+        if (err.error.message === 'Token expired') {
+          this.toast.error('Token expired. Please login again', {
+            duration: 2000,
+            position: 'top-right',
+          });
+          setTimeout(() => {
+            this._AuthService.logOut();
+          }, 2500);
+        } else {
+          this.toast.error(err.error.message, {
+            duration: 2000,
+
+            position: 'top-right',
+          });
+        }
       },
     });
   }
