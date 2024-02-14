@@ -45,7 +45,7 @@ export class RegisterComponent {
           if (res.message === 'User Created Successfully') {
             this.isLoading = false;
 
-            this._Router.navigate(['/login']);
+            location.reload();
           }
         },
         error: (err) => {
