@@ -3,7 +3,7 @@
   *ngIf="cart?.items?.length; else loading"
 >
   <h2>Shop Cart</h2>
-  <p class="text-main">Total: {{ cart.totalPrice | currency }}</p>
+  <p class="text-main mt-3">Total: {{ cart.totalPrice | currency }}</p>
 
   <div class="card cart">
     <div class="card-header">
@@ -77,7 +77,7 @@
       </button>
       <button
         class="btn btn-main float-end"
-        (click)="handlePayment(cart._id)"
+        [routerLink]="['/checkout', cart._id]"
         aria-label="Clear Cart"
       >
         CheckOut

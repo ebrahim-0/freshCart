@@ -24,6 +24,7 @@ import { SeeMorePipe } from './see-more.pipe';
 import { SearchPipe } from './search.pipe';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { HotToastModule } from '@ngneat/hot-toast';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { HotToastModule } from '@ngneat/hot-toast';
     SeeMorePipe,
     SearchPipe,
     FeaturedProductsComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

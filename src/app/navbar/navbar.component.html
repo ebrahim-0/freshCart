@@ -26,9 +26,7 @@
             >Home <span class="visually-hidden">(current)</span></a
           >
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="cart">Cart</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" routerLink="products">Products</a>
         </li>
@@ -59,8 +57,16 @@
         <li class="nav-item cursor-pointer" *ngIf="isLogin">
           <span (click)="logOut()" class="nav-link">Logout</span>
         </li>
-        <li class="nav-item cursor-pointer" *ngIf="isLogin">
-          <a routerLink="settings/change-password" class="nav-link">Settings</a>
+        <li class="nav-item" *ngIf="isLogin">
+          <a class="nav-link position-relative p-2" routerLink="cart">
+            <i class="fas fa-cart-shopping fa-lg text-main"></i>
+            <span
+              style="top: -6px; right: -15px"
+              class="position-absolute badge bg-main text-white"
+            >
+              {{ numberOfCartItem || 0 }}
+            </span>
+          </a>
         </li>
       </ul>
     </div>

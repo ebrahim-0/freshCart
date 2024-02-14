@@ -22,6 +22,7 @@ export class FeaturedProductsComponent {
     this._CartService.addToCart(asin).subscribe({
       next: (res) => {
         console.log(res);
+        this._CartService.numberOfItems.next(res.numberOfItems);
         this.toast.success(res.message, {
           duration: 3000,
           position: 'top-right',

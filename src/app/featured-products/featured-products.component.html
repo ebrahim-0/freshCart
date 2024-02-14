@@ -1,15 +1,17 @@
 <div class="product text-center h-100 px-2 pt-5 d-flex flex-column gap-3">
   <div [routerLink]="['/products-details', product.asin]">
-    <img
-      [src]="product.image"
-      class="img-fluid mb-3 object-fit"
-      [alt]="product.title"
-    />
+    <div class="image-container">
+      <img
+        [src]="product.image"
+        class="img-fluid mb-3 object-fit"
+        [alt]="product.title"
+      />
+    </div>
 
     <div class="mt-auto mx-auto">
-      <h5>
+      <h6>
         {{ product.title.split(" ").slice(0, 2).join(" ") | buy }}
-      </h5>
+      </h6>
       <div class="d-flex justify-content-between opacity-75">
         <p>{{ product.price }}</p>
         <div *ngIf="product.stars">
@@ -19,6 +21,7 @@
       </div>
     </div>
   </div>
+
   <button
     (click)="addToCart(product.asin)"
     class="btn btn-main my-2 details-button"

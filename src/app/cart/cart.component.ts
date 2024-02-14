@@ -3,6 +3,7 @@ import { CartService } from '../cart.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { AuthService } from '../auth.service';
 import { ICart } from '../interfaces/cart';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -19,14 +20,12 @@ export class CartComponent implements OnInit {
   constructor(
     private _CartService: CartService,
     private _AuthService: AuthService,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private _Router: Router
   ) {}
 
   ngOnInit(): void {
     this.getCart();
-
-    let baseURL = window.location.protocol + '//' + window.location.host;
-    console.log(baseURL);
   }
 
   getCart() {
@@ -35,6 +34,8 @@ export class CartComponent implements OnInit {
       next: (res) => {
         this.cart = res;
         console.log(res);
+        this._CartService.numberOfItems.next(res.numberOfCartItem);
+        console.log(this._CartService.numberOfItems.getValue());
 
         this.loadingMsg = '';
 
@@ -45,8 +46,6 @@ export class CartComponent implements OnInit {
           });
           this.loadingMsg = 'Cart is empty';
         }
-
-        console.log(this.loadingMsg);
       },
       error: (err) => {
         console.error(err);
@@ -182,28 +181,7 @@ export class CartComponent implements OnInit {
   handlePayment(cartId: string) {
     this.load = true;
     this.loadMsg = 'Payment is processing...';
-    this._CartService.payment(cartId, 'http://localhost:4200').subscribe({
-      next: (res) => {
-        console.log(res);
-        this.load = false;
-        this.toast.success(' You will be redirected to the payment page.', {
-          duration: 2000,
-          position: 'top-right',
-        });
-        // window.location.href = res.session.url;
-        window.open(res.session.url, '_blank');
-      },
-      error: (err) => {
-        console.error(err);
-        if (err.error.message === 'Token expired') {
-          this.handleTokenExpired();
-        } else {
-          this.toast.error(err.error.message, {
-            duration: 2000,
-            position: 'top-right',
-          });
-        }
-      },
-    });
+
+    this._Router.navigate(['/checkout', cartId]);
   }
 }
