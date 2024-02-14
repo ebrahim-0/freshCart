@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class BuyPipe implements PipeTransform {
   transform(productName: string): string {
-    return `Buy ${productName} now!`;
+    return `Buy ${productName}`;
   }
 }

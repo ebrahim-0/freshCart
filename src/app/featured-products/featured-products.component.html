@@ -9,9 +9,9 @@
     </div>
 
     <div class="mt-auto mx-auto">
-      <h6>
+      <h5>
         {{ product.title.split(" ").slice(0, 2).join(" ") | buy }}
-      </h6>
+      </h5>
       <div class="d-flex justify-content-between opacity-75">
         <p>{{ product.price }}</p>
         <div *ngIf="product.stars">
