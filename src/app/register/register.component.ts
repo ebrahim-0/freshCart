@@ -13,7 +13,7 @@ export class RegisterComponent {
 
   errorMessage: string = '';
 
-  constructor(private _AuthServices: AuthService, private _Router: Router) {}
+  constructor(private _AuthService: AuthService, private _Router: Router) {}
 
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -37,15 +37,21 @@ export class RegisterComponent {
 
     if (registerForm.valid) {
       this.errorMessage = '';
-      this._AuthServices.register(registerForm.value).subscribe({
+      this._AuthService.register(registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
-          localStorage.setItem('token', res.token);
+
+          // if want to login directly after register
+          // localStorage.setItem('token', res.token);
+          // this._AuthService.decodeUserData();
 
           if (res.message === 'User Created Successfully') {
             this.isLoading = false;
 
-            location.reload();
+            // location.reload();
+
+            // this._Router.navigate(['/']);
+            this._Router.navigate(['/login']);
           }
         },
         error: (err) => {

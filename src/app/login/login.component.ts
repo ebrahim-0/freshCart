@@ -52,12 +52,8 @@ export class LoginComponent {
           console.log('completed');
         },
       });
-
-      console.log('Form is valid', loginForm.value);
     } else {
       this.isLoading = false;
-
-      console.log('Form is invalid', loginForm);
     }
   };
 }
