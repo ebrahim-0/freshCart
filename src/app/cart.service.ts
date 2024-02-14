@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  url: string = 'https://e-commerce-2dfi.onrender.com/api';
-  // url: string = 'http://localhost:8000/api';
+  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
+  url: string = 'http://localhost:8000/api';
 
   constructor(private _HttpClient: HttpClient) {}
 
@@ -63,5 +63,12 @@ export class CartService {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  payment(cartId: string, url: string): Observable<any> {
+    return this._HttpClient.post(
+      `${this.url}/checkout-session/${cartId}?url=${url}`,
+      {}
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Product } from '../product';
+import { IProduct } from '../interfaces/product';
 import { CartService } from '../cart.service';
 import { AuthService } from '../auth.service';
 import { HotToastService } from '@ngneat/hot-toast';
@@ -10,7 +10,7 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./featured-products.component.css'],
 })
 export class FeaturedProductsComponent {
-  @Input() product!: Product;
+  @Input() product!: IProduct;
 
   constructor(
     private _CartService: CartService,

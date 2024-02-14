@@ -21,7 +21,7 @@
             />
           </div>
           <div
-            class="col-xl-9 d-flex flex-column flex-xl-row justify-content-between align-items-center"
+            class="col-xl-9 d-flex flex-column flex-xl-row justify-content-between"
           >
             <div>
               <h5 class="w-75">{{ product.product.title }}</h5>
@@ -34,7 +34,7 @@
                 }}
               </p>
             </div>
-            <div>
+            <div class="my-auto">
               <div class="btn-group mx-auto my-2 me-2">
                 <button
                   class="btn border-main btn-sm"
@@ -67,19 +67,29 @@
         </div>
       </div>
     </div>
-    <div class="card-footer">
+    <div class="card-footer p-4">
       <button
-        class="btn btn-danger"
+        class="btn btn-danger float-start"
         (click)="clearCart()"
         aria-label="Clear Cart"
       >
         Clear Cart
       </button>
+      <button
+        class="btn btn-main float-end"
+        (click)="handlePayment(cart._id)"
+        aria-label="Clear Cart"
+      >
+        CheckOut
+        <i class="fa-brands fa-cc-visa ms-2"></i>
+      </button>
     </div>
   </div>
 </div>
 
-<div *ngIf="change" class="loading">Updating Your Cart...</div>
+<div [ngStyle]="{ top: load ? '50%' : '-105px' }" class="loading">
+  {{ loadMsg ? loadMsg : " Updating Your Cart..." }}
+</div>
 
 <ng-template #loading>
   <div class="alert alert-info">{{ loadingMsg }}</div>

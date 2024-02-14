@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { AuthService } from '../auth.service';
+import { ICart } from '../interfaces/cart';
 
 @Component({
   selector: 'app-cart',
@@ -11,21 +12,26 @@ import { AuthService } from '../auth.service';
 export class CartComponent implements OnInit {
   cart!: ICart;
   change: boolean = false;
+  load: boolean = false;
+  loadMsg: string = '';
   loadingMsg: string = '';
 
   constructor(
-    private cartService: CartService,
-    private authService: AuthService,
+    private _CartService: CartService,
+    private _AuthService: AuthService,
     private toast: HotToastService
   ) {}
 
   ngOnInit(): void {
     this.getCart();
+
+    let baseURL = window.location.protocol + '//' + window.location.host;
+    console.log(baseURL);
   }
 
   getCart() {
     this.loadingMsg = 'Cart is Loading...';
-    this.cartService.getCart().subscribe({
+    this._CartService.getCart().subscribe({
       next: (res) => {
         this.cart = res;
         console.log(res);
@@ -33,7 +39,10 @@ export class CartComponent implements OnInit {
         this.loadingMsg = '';
 
         if (res.message === 'Cart is empty') {
-          this.toast.error(res.message, { duration: 2000 });
+          this.toast.error(res.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
           this.loadingMsg = 'Cart is empty';
         }
 
@@ -44,7 +53,11 @@ export class CartComponent implements OnInit {
         if (err.error.message === 'Token expired') {
           this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, { duration: 2000 });
+          this.toast.error(err.error.message, {
+            duration: 2000,
+
+            position: 'top-right',
+          });
         }
       },
       complete: () => {},
@@ -52,54 +65,67 @@ export class CartComponent implements OnInit {
   }
 
   incrementQuantity(asin: string) {
-    this.change = true;
-
-    this.cartService.addToCart(asin).subscribe({
+    this.load = true;
+    this._CartService.addToCart(asin).subscribe({
       next: (res) => {
         this.getCart();
-        this.toast.success(res.message, { duration: 2000 });
-        this.change = false;
+        this.toast.success(res.message, {
+          duration: 2000,
+          position: 'top-right',
+        });
+        this.load = false;
       },
       error: (err) => {
         console.error(err);
         if (err.error.message === 'Token expired') {
           this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, { duration: 2000 });
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
         }
 
-        this.change = false;
+        this.load = false;
       },
     });
   }
 
   decrementQuantity(asin: string) {
-    this.change = true;
-    this.cartService.decrementQuantity(asin).subscribe({
+    this.load = true;
+    this._CartService.decrementQuantity(asin).subscribe({
       next: (res) => {
         this.getCart();
-        this.toast.success(res.message, { duration: 2000 });
-        this.change = false;
+        this.toast.success(res.message, {
+          duration: 2000,
+          position: 'top-right',
+        });
+        this.load = false;
       },
       error: (err) => {
         console.error(err);
         if (err.error.message === 'Token expired') {
           this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, { duration: 2000 });
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
         }
-
-        this.change = false;
+        this.load = false;
       },
     });
   }
 
   removeProduct(asin: string) {
-    this.change = true;
-    this.cartService.removeProduct(asin).subscribe({
+    this.load = true;
+    this._CartService.removeProduct(asin).subscribe({
       next: (res) => {
-        this.change = false;
-        this.toast.success(res.message, { duration: 2000 });
+        this.load = false;
+        this.toast.success(res.message, {
+          duration: 2000,
+          position: 'top-right',
+        });
         this.getCart();
       },
       error: (err) => {
@@ -107,62 +133,77 @@ export class CartComponent implements OnInit {
         if (err.error.message === 'Token expired') {
           this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, { duration: 2000 });
-          this.change = false;
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
+          this.load = false;
         }
       },
     });
   }
 
   clearCart() {
-    this.change = true;
-    this.cartService.clearCart().subscribe({
+    this.load = true;
+    this._CartService.clearCart().subscribe({
       next: (res) => {
         this.getCart();
-        this.toast.success('Cart is cleared', { duration: 2000 });
-        this.change = false;
+        this.toast.success('Cart is cleared', {
+          duration: 2000,
+          position: 'top-right',
+        });
+        this.load = false;
       },
       error: (err) => {
         console.error(err);
         if (err.error.message === 'Token expired') {
           this.handleTokenExpired();
         } else {
-          this.toast.error(err.error.message, { duration: 2000 });
-          this.change = false;
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
+          this.load = false;
         }
       },
     });
   }
 
   handleTokenExpired() {
-    this.toast.error('Token expired. Please login again', { duration: 2000 });
+    this.toast.error('Token expired. Please login again', {
+      duration: 2000,
+      position: 'top-right',
+    });
     setTimeout(() => {
-      this.authService.logOut();
+      this._AuthService.logOut();
     }, 2500);
   }
-}
 
-interface ICart {
-  createdAt: string;
-  items: Array<IItem>;
-  totalPrice: number;
-  updatedAt: string;
-  userId: string;
-  _id: string;
-}
-
-interface IItem {
-  asin: string;
-  quantity: number;
-  product: IProduct;
-}
-
-interface IProduct {
-  asin: string;
-  title: string;
-  url: string;
-  image: string;
-  price: string;
-  rating_count: number;
-  stars: number;
+  handlePayment(cartId: string) {
+    this.load = true;
+    this.loadMsg = 'Payment is processing...';
+    this._CartService.payment(cartId, 'http://localhost:4200').subscribe({
+      next: (res) => {
+        console.log(res);
+        this.load = false;
+        this.toast.success(' You will be redirected to the payment page.', {
+          duration: 2000,
+          position: 'top-right',
+        });
+        // window.location.href = res.session.url;
+        window.open(res.session.url, '_blank');
+      },
+      error: (err) => {
+        console.error(err);
+        if (err.error.message === 'Token expired') {
+          this.handleTokenExpired();
+        } else {
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+          });
+        }
+      },
+    });
+  }
 }

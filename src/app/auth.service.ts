@@ -16,8 +16,8 @@ export class AuthService {
     }
   }
 
-  url: string = 'https://e-commerce-2dfi.onrender.com/api';
-  // url: string = 'http://localhost:8000/api';
+  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
+  url: string = 'http://localhost:8000/api';
 
   register(userData: object): Observable<any> {
     return this._HttpClient.post(`${this.url}/signup`, userData);
