@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,11 @@ export class LoginComponent {
 
   errorMessage: string = '';
 
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  constructor(
+    private _AuthService: AuthService,
+    private _Router: Router,
+    private toast: HotToastService
+  ) {}
 
   handleLogin = (loginForm: FormGroup) => {
     this.isLoading = true;
@@ -47,6 +52,13 @@ export class LoginComponent {
           console.log(err);
           this.isLoading = false;
           this.errorMessage = err.error.message;
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+            style: {
+              marginTop: '65px',
+            },
+          });
         },
         complete: () => {
           console.log('completed');

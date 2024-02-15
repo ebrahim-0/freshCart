@@ -80,7 +80,7 @@ export class ProductDetailsComponent implements OnInit {
           duration: 2000,
           position: 'top-right',
           style: {
-            marginTop: '90px',
+            marginTop: '65px',
           },
         });
       },
@@ -91,7 +91,7 @@ export class ProductDetailsComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
 
@@ -103,7 +103,7 @@ export class ProductDetailsComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
         }

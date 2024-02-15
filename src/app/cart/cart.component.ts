@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
           this.loadingMsg = 'Cart is empty';
@@ -59,7 +59,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
         }
@@ -77,7 +77,7 @@ export class CartComponent implements OnInit {
           duration: 2000,
           position: 'top-right',
           style: {
-            marginTop: '90px',
+            marginTop: '65px',
           },
         });
         this.load = false;
@@ -91,7 +91,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
         }
@@ -110,7 +110,7 @@ export class CartComponent implements OnInit {
           duration: 2000,
           position: 'top-right',
           style: {
-            marginTop: '90px',
+            marginTop: '65px',
           },
         });
         this.load = false;
@@ -124,7 +124,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
         }
@@ -142,7 +142,7 @@ export class CartComponent implements OnInit {
           duration: 2000,
           position: 'top-right',
           style: {
-            marginTop: '90px',
+            marginTop: '65px',
           },
         });
         this.getCart();
@@ -156,7 +156,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
           this.load = false;
@@ -174,7 +174,7 @@ export class CartComponent implements OnInit {
           duration: 2000,
           position: 'top-right',
           style: {
-            marginTop: '90px',
+            marginTop: '65px',
           },
         });
         this.load = false;
@@ -188,7 +188,7 @@ export class CartComponent implements OnInit {
             duration: 2000,
             position: 'top-right',
             style: {
-              marginTop: '90px',
+              marginTop: '65px',
             },
           });
           this.load = false;
@@ -202,7 +202,7 @@ export class CartComponent implements OnInit {
       duration: 2000,
       position: 'top-right',
       style: {
-        marginTop: '90px',
+        marginTop: '65px',
       },
     });
     setTimeout(() => {

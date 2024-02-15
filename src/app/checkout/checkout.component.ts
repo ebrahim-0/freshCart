@@ -33,7 +33,7 @@ export class CheckoutComponent implements OnInit {
         duration: 2000,
         position: 'top-right',
         style: {
-          marginTop: '90px',
+          marginTop: '65px',
         },
       });
       return;
@@ -47,7 +47,7 @@ export class CheckoutComponent implements OnInit {
               duration: 2000,
               position: 'top-right',
               style: {
-                marginTop: '90px',
+                marginTop: '65px',
               },
             });
             // window.location.href = res.session.url;
@@ -60,7 +60,7 @@ export class CheckoutComponent implements OnInit {
               duration: 2000,
               position: 'top-right',
               style: {
-                marginTop: '90px',
+                marginTop: '65px',
               },
             });
           },

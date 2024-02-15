@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,11 @@ export class RegisterComponent {
 
   errorMessage: string = '';
 
-  constructor(private _AuthService: AuthService, private _Router: Router) {}
+  constructor(
+    private _AuthService: AuthService,
+    private _Router: Router,
+    private toast: HotToastService
+  ) {}
 
   registerForm: FormGroup = new FormGroup({
     name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -46,6 +51,14 @@ export class RegisterComponent {
           // this._AuthService.decodeUserData();
 
           if (res.message === 'User Created Successfully') {
+            this.toast.success(res.message, {
+              duration: 2000,
+              position: 'top-right',
+              style: {
+                marginTop: '65px',
+              },
+            });
+
             this.isLoading = false;
 
             // location.reload();
@@ -58,6 +71,14 @@ export class RegisterComponent {
           console.log(err);
           this.isLoading = false;
           this.errorMessage = err.error.message;
+
+          this.toast.error(err.error.message, {
+            duration: 2000,
+            position: 'top-right',
+            style: {
+              marginTop: '65px',
+            },
+          });
         },
         complete: () => {
           console.log('completed');

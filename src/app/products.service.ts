@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'https://e-commerce-api-one.cyclic.app/api';
+  url: string = 'https://e-commerce-api-node.cyclic.app/api';
   // url: string = 'https://e-commerce-2dfi.onrender.com/api';
   // url: string = 'http://localhost:8000/api';
 
