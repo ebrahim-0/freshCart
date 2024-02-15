@@ -24,8 +24,11 @@ export class FeaturedProductsComponent {
         console.log(res);
         this._CartService.numberOfItems.next(res.numberOfItems);
         this.toast.success(res.message, {
-          duration: 3000,
+          duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
       },
       error: (err) => {
@@ -35,6 +38,9 @@ export class FeaturedProductsComponent {
           this.toast.error('Token expired Please login again', {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
 
           setTimeout(() => {
@@ -42,8 +48,11 @@ export class FeaturedProductsComponent {
           }, 2500);
         } else {
           this.toast.error(err.error.message, {
-            duration: 3000,
+            duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
         }
       },

@@ -8,8 +8,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class CartService {
-  url: string = 'https://e-commerce-2dfi.onrender.com/api';
+  url: string = 'https://e-commerce-api-one.cyclic.app/api';
+  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
   // url: string = 'http://localhost:8000/api';
+
   token = localStorage.getItem('token');
 
   numberOfItems = new BehaviorSubject(0);

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
@@ -16,7 +16,8 @@ export class AuthService {
     }
   }
 
-  url: string = 'https://e-commerce-2dfi.onrender.com/api';
+  url: string = 'https://e-commerce-api-one.cyclic.app/api';
+  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
   // url: string = 'http://localhost:8000/api';
 
   register(userData: object): Observable<any> {

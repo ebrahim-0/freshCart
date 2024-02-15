@@ -63,12 +63,8 @@ export class RegisterComponent {
           console.log('completed');
         },
       });
-
-      console.log('Form is valid', registerForm.value);
     } else {
       this.isLoading = false;
-
-      console.log('Form is invalid', registerForm);
     }
   };
 }

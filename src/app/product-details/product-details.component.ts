@@ -77,8 +77,11 @@ export class ProductDetailsComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.toast.success(res.message, {
-          duration: 3000,
+          duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
       },
       error: (err) => {
@@ -87,6 +90,9 @@ export class ProductDetailsComponent implements OnInit {
           this.toast.error('Token expired Please login again', {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
 
           setTimeout(() => {
@@ -94,8 +100,11 @@ export class ProductDetailsComponent implements OnInit {
           }, 2500);
         } else {
           this.toast.error(err.error.message, {
-            duration: 3000,
+            duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
         }
       },

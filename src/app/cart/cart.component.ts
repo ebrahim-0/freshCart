@@ -43,6 +43,9 @@ export class CartComponent implements OnInit {
           this.toast.error(res.message, {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
           this.loadingMsg = 'Cart is empty';
         }
@@ -54,8 +57,10 @@ export class CartComponent implements OnInit {
         } else {
           this.toast.error(err.error.message, {
             duration: 2000,
-
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
         }
       },
@@ -71,6 +76,9 @@ export class CartComponent implements OnInit {
         this.toast.success(res.message, {
           duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
         this.load = false;
       },
@@ -82,6 +90,9 @@ export class CartComponent implements OnInit {
           this.toast.error(err.error.message, {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
         }
 
@@ -98,6 +109,9 @@ export class CartComponent implements OnInit {
         this.toast.success(res.message, {
           duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
         this.load = false;
       },
@@ -109,6 +123,9 @@ export class CartComponent implements OnInit {
           this.toast.error(err.error.message, {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
         }
         this.load = false;
@@ -124,6 +141,9 @@ export class CartComponent implements OnInit {
         this.toast.success(res.message, {
           duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
         this.getCart();
       },
@@ -135,6 +155,9 @@ export class CartComponent implements OnInit {
           this.toast.error(err.error.message, {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
           this.load = false;
         }
@@ -150,6 +173,9 @@ export class CartComponent implements OnInit {
         this.toast.success('Cart is cleared', {
           duration: 2000,
           position: 'top-right',
+          style: {
+            marginTop: '90px',
+          },
         });
         this.load = false;
       },
@@ -161,6 +187,9 @@ export class CartComponent implements OnInit {
           this.toast.error(err.error.message, {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '90px',
+            },
           });
           this.load = false;
         }
@@ -172,6 +201,9 @@ export class CartComponent implements OnInit {
     this.toast.error('Token expired. Please login again', {
       duration: 2000,
       position: 'top-right',
+      style: {
+        marginTop: '90px',
+      },
     });
     setTimeout(() => {
       this._AuthService.logOut();

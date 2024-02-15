@@ -32,6 +32,9 @@ export class CheckoutComponent implements OnInit {
       this.toast.error('Cart is Empty', {
         duration: 2000,
         position: 'top-right',
+        style: {
+          marginTop: '90px',
+        },
       });
       return;
     } else {
@@ -43,6 +46,9 @@ export class CheckoutComponent implements OnInit {
             this.toast.success(' You will be redirected to the payment page.', {
               duration: 2000,
               position: 'top-right',
+              style: {
+                marginTop: '90px',
+              },
             });
             // window.location.href = res.session.url;
             window.open(res.session.url, '_blank');
@@ -53,6 +59,9 @@ export class CheckoutComponent implements OnInit {
             this.toast.error(err.error.message, {
               duration: 2000,
               position: 'top-right',
+              style: {
+                marginTop: '90px',
+              },
             });
           },
         });
