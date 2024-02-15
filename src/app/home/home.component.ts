@@ -49,3 +49,26 @@ export class HomeComponent implements OnInit {
     });
   }
 }
+
+function UseDecorator(name: String) {
+  return (constructor: Function) => {
+    console.log(constructor);
+
+    constructor.prototype.name = name;
+
+    constructor.prototype.getName = () => {
+      return constructor.prototype.name + ' From getName function';
+    };
+  };
+}
+
+@UseDecorator('ahmed')
+class User {}
+
+let user = new User();
+
+// @ts-ignore
+console.log(user.name);
+
+// @ts-ignore
+console.log(user.getName());
