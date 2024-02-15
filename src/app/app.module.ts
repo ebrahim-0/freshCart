@@ -14,7 +14,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -25,6 +25,7 @@ import { SearchPipe } from './search.pipe';
 import { FeaturedProductsComponent } from './featured-products/featured-products.component';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { HeadersInterceptor } from './headers.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,25 @@ import { CheckoutComponent } from './checkout/checkout.component';
     FormsModule,
     HotToastModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'API_URL_1',
+      useValue: 'https://e-commerce-api-node.cyclic.app/api',
+    },
+    {
+      provide: 'API_URL_2',
+      useValue: 'https://e-commerce-2dfi.onrender.com/api',
+    },
+    {
+      provide: 'API_URL_3',
+      useValue: 'http://localhost:8000/api',
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeadersInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

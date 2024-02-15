@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { ProductsService } from '../products.service';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { CartService } from '../cart.service';
-import { HotToastService } from '@ngneat/hot-toast';
-import { AuthService } from '../auth.service';
+import {Component, ElementRef, OnInit} from '@angular/core';
+import {ProductsService} from '../products.service';
+import {ActivatedRoute} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
+import {OwlOptions} from 'ngx-owl-carousel-o';
+import {CartService} from '../cart.service';
+import {HotToastService} from '@ngneat/hot-toast';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -20,7 +20,8 @@ export class ProductDetailsComponent implements OnInit {
     private _Router: ActivatedRoute,
     private toast: HotToastService,
     private elementRef: ElementRef
-  ) {}
+  ) {
+  }
 
   asin: any = new BehaviorSubject('');
 

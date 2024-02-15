@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
         this.loadingMsg = '';
 
         if (res.message === 'Cart is empty') {
-          this.toast.error(res.message, {
+          this.toast.error(res.message || 'Cart is empty', {
             duration: 2000,
             position: 'top-right',
             style: {

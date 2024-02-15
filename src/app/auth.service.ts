@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,22 +10,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   userData = new BehaviorSubject(null);
 
-  constructor(private _HttpClient: HttpClient, private _Router: Router) {
+  constructor(
+    private _HttpClient: HttpClient,
+    private _Router: Router,
+    @Inject('API_URL_1') private API_URL: string
+  ) {
     if (localStorage.getItem('token')) {
       this.decodeUserData();
     }
   }
 
-  url: string = 'https://e-commerce-api-node.cyclic.app/api';
-  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
-  // url: string = 'http://localhost:8000/api';
-
   register(userData: object): Observable<any> {
-    return this._HttpClient.post(`${this.url}/signup`, userData);
+    return this._HttpClient.post(`${this.API_URL}/signup`, userData);
   }
 
   login(userData: object): Observable<any> {
-    return this._HttpClient.post(`${this.url}/login`, userData);
+    return this._HttpClient.post(`${this.API_URL}/login`, userData);
   }
 
   logOut() {

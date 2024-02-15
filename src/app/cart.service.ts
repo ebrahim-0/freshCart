@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 import { HotToastService } from '@ngneat/hot-toast';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -8,18 +8,13 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class CartService {
-  url: string = 'https://e-commerce-api-node.cyclic.app/api';
-  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
-  // url: string = 'http://localhost:8000/api';
-
-  token = localStorage.getItem('token');
-
   numberOfItems = new BehaviorSubject(0);
 
   constructor(
     private _HttpClient: HttpClient,
     private _AuthService: AuthService,
-    private toast: HotToastService
+    private toast: HotToastService,
+    @Inject('API_URL_1') private API_URL: string
   ) {
     this.getNumberOfItems();
   }
@@ -35,63 +30,47 @@ export class CartService {
           this.toast.error('Token expired. Please login again', {
             duration: 2000,
             position: 'top-right',
+            style: {
+              marginTop: '65px',
+            },
           });
           setTimeout(() => {
             this._AuthService.logOut();
           }, 2500);
         } else {
-          this.toast.error(err.error.message, {
-            duration: 2000,
-
-            position: 'top-right',
-          });
+          this.toast.error(
+            err.error.message || 'Failed to get Number of Items',
+            {
+              duration: 2000,
+              position: 'top-right',
+              style: {
+                marginTop: '65px',
+              },
+            }
+          );
         }
       },
     });
   }
 
   addToCart(asin: string): Observable<any> {
-    return this._HttpClient.post(
-      `${this.url}/add-to-cart`,
-      { asin },
-      {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
-    );
+    return this._HttpClient.post(`${this.API_URL}/add-to-cart`, { asin });
   }
 
   getCart(): Observable<any> {
-    return this._HttpClient.get(`${this.url}/cart`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this._HttpClient.get(`${this.API_URL}/cart`);
   }
 
   decrementQuantity(asin: string): Observable<any> {
-    return this._HttpClient.put(`${this.url}/decrement/${asin}`, null, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this._HttpClient.put(`${this.API_URL}/decrement/${asin}`, null);
   }
 
   removeProduct(asin: string): Observable<any> {
-    return this._HttpClient.delete(`${this.url}/delete/${asin}`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this._HttpClient.delete(`${this.API_URL}/delete/${asin}`);
   }
 
   clearCart(): Observable<any> {
-    return this._HttpClient.delete(`${this.url}/clear-cart`, {
-      headers: {
-        Authorization: `Bearer ${this.token}`,
-      },
-    });
+    return this._HttpClient.delete(`${this.API_URL}/clear-cart`);
   }
 
   onlinePayment(
@@ -100,13 +79,8 @@ export class CartService {
     shippingAddress: object
   ): Observable<any> {
     return this._HttpClient.post(
-      `${this.url}/checkout-session/${cartId}?url=${url}`,
-      { shippingAddress: shippingAddress },
-      {
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
-      }
+      `${this.API_URL}/checkout-session/${cartId}?url=${url}`,
+      { shippingAddress: shippingAddress }
     );
   }
 }

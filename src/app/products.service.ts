@@ -1,30 +1,31 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  url: string = 'https://e-commerce-api-node.cyclic.app/api';
-  // url: string = 'https://e-commerce-2dfi.onrender.com/api';
-  // url: string = 'http://localhost:8000/api';
-
-  constructor(private _HttpClient: HttpClient) {}
+  constructor(
+    private _HttpClient: HttpClient,
+    @Inject('API_URL_1') private API_URL: string
+  ) {}
 
   getProducts(): Observable<any> {
-    return this._HttpClient.get(`${this.url}/products`);
+    return this._HttpClient.get(`${this.API_URL}/products`);
   }
 
   setProductDetails(product: any): Observable<any> {
-    return this._HttpClient.post(`${this.url}/productDetails`, product);
+    return this._HttpClient.post(`${this.API_URL}/productDetails`, product);
   }
 
   getProductDetails(asin: string): Observable<any> {
-    return this._HttpClient.get(`${this.url}/getProductDetails?asin=${asin}`);
+    return this._HttpClient.get(
+      `${this.API_URL}/getProductDetails?asin=${asin}`
+    );
   }
 
   getProduct = (asin: string): Observable<any> => {
-    return this._HttpClient.get(`${this.url}/product?asin=${asin}`);
+    return this._HttpClient.get(`${this.API_URL}/product?asin=${asin}`);
   };
 }
