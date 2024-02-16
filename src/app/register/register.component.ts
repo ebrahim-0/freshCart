@@ -68,8 +68,8 @@ export class RegisterComponent {
         next: (res) => {
           console.log(res);
           // if want to login directly after register
-          // localStorage.setItem('token', res.token);
-          // this._AuthService.decodeUserData();
+          localStorage.setItem('token', res.token);
+          this._AuthService.decodeUserData();
           if (res.message === 'User Created Successfully') {
             this.toast.success(res.message, {
               duration: 2000,
@@ -80,8 +80,9 @@ export class RegisterComponent {
             });
             this.isLoading = false;
             // location.reload();
-            // this._Router.navigate(['/']);
-            this._Router.navigate(['/login']);
+            this._Router.navigate(['/']);
+
+            // this._Router.navigate(['/login']);
           }
         },
         error: (err) => {
