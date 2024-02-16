@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "weekThreeProject": {
+    "freshCart": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/week-three-project",
+            "outputPath": "dist/fresh-cart",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "weekThreeProject:build:production"
+              "browserTarget": "freshCart:build:production"
             },
             "development": {
-              "browserTarget": "weekThreeProject:build:development"
+              "browserTarget": "freshCart:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "weekThreeProject:build"
+            "browserTarget": "freshCart:build"
           }
         },
         "test": {
