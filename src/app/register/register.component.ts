@@ -20,22 +20,44 @@ export class RegisterComponent {
     private toast: HotToastService
   ) {}
 
-  registerForm: FormGroup = new FormGroup({
-    name: new FormControl(null, [Validators.required, Validators.minLength(3)]),
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [
-      Validators.required,
+  registerForm: FormGroup = new FormGroup(
+    {
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
 
-      Validators.pattern('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'),
-    ]),
-    password_confirmation: new FormControl(null, [Validators.required]),
-    phoneNumber: new FormControl(null, [
-      Validators.required,
-      Validators.pattern('^[0-9]{11}$'),
-    ]),
-  });
+        Validators.pattern('(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'),
+      ]),
+      password_confirmation: new FormControl(null, [Validators.required]),
+      phoneNumber: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[0-9]{11}$'),
+      ]),
+    },
+    { validators: this.matchPassword }
+  );
 
-  handleRegister = (registerForm: FormGroup) => {
+  matchPassword(registerForm: any) {
+    if (
+      registerForm.get('password')?.value !==
+      registerForm.get('password_confirmation')?.value
+    ) {
+      const match = {
+        matchPassword: 'Password confirmation must match password.',
+      };
+
+      registerForm.get('password_confirmation')?.setErrors(match);
+      return match;
+    } else {
+      return null;
+    }
+  }
+
+  handleRegister(registerForm: FormGroup) {
     this.isLoading = true;
 
     registerForm.markAllAsTouched();
@@ -45,11 +67,9 @@ export class RegisterComponent {
       this._AuthService.register(registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
-
           // if want to login directly after register
           // localStorage.setItem('token', res.token);
           // this._AuthService.decodeUserData();
-
           if (res.message === 'User Created Successfully') {
             this.toast.success(res.message, {
               duration: 2000,
@@ -58,11 +78,8 @@ export class RegisterComponent {
                 marginTop: '65px',
               },
             });
-
             this.isLoading = false;
-
             // location.reload();
-
             // this._Router.navigate(['/']);
             this._Router.navigate(['/login']);
           }
@@ -71,7 +88,6 @@ export class RegisterComponent {
           console.log(err);
           this.isLoading = false;
           this.errorMessage = err.error.message;
-
           this.toast.error(err.error.message, {
             duration: 2000,
             position: 'top-right',
@@ -87,5 +103,5 @@ export class RegisterComponent {
     } else {
       this.isLoading = false;
     }
-  };
+  }
 }

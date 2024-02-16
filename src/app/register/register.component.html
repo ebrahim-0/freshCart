@@ -120,9 +120,7 @@
         </div>
         <div
           *ngIf="
-            registerForm.get('password_confirmation')?.value !==
-              registerForm.get('password')?.value &&
-            !registerForm.get('password_confirmation')?.errors
+            registerForm.get('password_confirmation')?.getError('matchPassword')
           "
         >
           Password confirmation must match password.
