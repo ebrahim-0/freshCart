@@ -61,14 +61,10 @@ import { HeadersInterceptor } from './headers.interceptor';
   providers: [
     {
       provide: 'API_URL_1',
-      useValue: 'https://e-commerce-api-node.cyclic.app/api',
-    },
-    {
-      provide: 'API_URL_2',
       useValue: 'https://e-commerce-2dfi.onrender.com/api',
     },
     {
-      provide: 'API_URL_3',
+      provide: 'API_URL_2',
       useValue: 'http://localhost:8000/api',
     },
     {
